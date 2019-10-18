@@ -36,7 +36,7 @@ function countRequests(req, res, next) {
 
 app.use(countRequests);
 
-app.post('/projects', (req, res) => { //checkProjectsExists, (req, res) => {
+app.post('/projects', (req, res) => {
   const project = req.body;
   projects.push(project);
   return res.json(projects);
@@ -46,7 +46,7 @@ app.get('/projects', (req, res) => {
   return res.json(projects);
 });
 
-app.put('/projects/:id', (req, res) => { //checkUserInArray, checkUserExists, (req, res) => {
+app.put('/projects/:id', checkProjectsExists, (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
 
@@ -57,7 +57,7 @@ app.put('/projects/:id', (req, res) => { //checkUserInArray, checkUserExists, (r
   return res.json(project);
 });
 
-app.delete('/projects/:id', (req, res) => { // checkUserInArray, 
+app.delete('/projects/:id', checkProjectsExists, (req, res) => {
   const { id } = req.params;
 
   const index = projects.findIndex(p => p.id == id);
@@ -67,7 +67,7 @@ app.delete('/projects/:id', (req, res) => { // checkUserInArray,
   return res.send();
 });
 
-app.post('/projects/:id/tasks', (req, res) => { // checkUserInArray, 
+app.post('/projects/:id/tasks', checkProjectsExists, (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
 
